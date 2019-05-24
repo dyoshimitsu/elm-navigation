@@ -19,7 +19,7 @@ main =
         , update = update
         , subscriptions = subscriptions
         , onUrlChange = UrlChanged
-        , onUrlReport = LinkClicked
+        , onUrlRequest = LinkClicked
         }
 
 
@@ -35,7 +35,7 @@ type alias Model =
 
 init : () -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
 init flags url key =
-    ( Modle key url, Cmd.none )
+    ( Model key url, Cmd.none )
 
 
 
@@ -55,7 +55,7 @@ update msg model =
                 Browser.Internal url ->
                     ( model, Nav.pushUrl model.key (Url.toString url) )
 
-                Browser.External ->
+                Browser.External href ->
                     ( model, Nav.load href )
 
         UrlChanged url ->
@@ -96,4 +96,4 @@ view model =
 
 viewLink : String -> Html msg
 viewLink path =
-    li [] [ a [ herf path ] [ text path ] ]
+    li [] [ a [ href path ] [ text path ] ]
